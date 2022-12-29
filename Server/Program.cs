@@ -1,3 +1,4 @@
+using Data.Common;
 using Infrastructure.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = 
     builder.Configuration.GetConnectionString("MazzDB");
 
-builder.Services.AddDbContext<Data.DatabaseContext>
+builder.Services.AddDbContext<DatabaseContext>
 	(optionsAction: options =>
 	{
 		options
