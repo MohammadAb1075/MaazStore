@@ -1,4 +1,4 @@
-﻿namespace Domain;
+﻿namespace Domain.Products;
 
 public class Product
 {
@@ -7,6 +7,6 @@ public class Product
     (System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     public string Name { get; set; }
-    public double UnitPrice{ get; set; }
+    public double UnitPrice { get; set; }
 
 }
