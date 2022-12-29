@@ -1,43 +1,68 @@
 ﻿using Common.Paginations;
+using Data.Common;
 using Domain.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+namespace Data.Products;
 
-namespace Data.Products
+public class ProductRepository : IProductRepository
 {
-    internal class ProductRepository : IProductRepository
+
+    private readonly DatabaseContext _db;
+
+    public ProductRepository(DatabaseContext db)
     {
-        public Task AddAsync(Product model)
-        {
-            throw new NotImplementedException();
-        }
+        _db = db;
+    }
 
-        public Task CommitAsync()
+    public async Task<PagedData<Product>> GetAllAsync(int pageNumber, int pageSize)
+    {
+        var result = new PagedData<Product>
         {
-            throw new NotImplementedException();
-        }
+            PageInfo = new PageInfo
+            {
+                PageSize = pageSize,
+                PageNumber = pageNumber
+            }
+        };
 
-        public Task DeleteAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
+        result.Data = 
+            await
+            _db.Products
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        
+        result.PageInfo.TotalCount = await _db.Products.CountAsync();
+        return result;
+    }
 
-        public Task<PagedData<Product>> GetAllAsync(int pageNumber, int pageSize, string category)
-        {
-            throw new NotImplementedException();
-        }
+    public async Task<Product> GetByIdAsync(int id)
+    {
+        return await _db.Products.FirstOrDefaultAsync(p => p.Id == id);
+    }
 
-        public Task<Product> GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
+    public async Task AddAsync(Product model)
+    {
+        await _db.Products.AddAsync(model);
+        await CommitAsync();
+    }
 
-        public Task UpdateAsync(Product model)
-        {
-            throw new NotImplementedException();
-        }
+    public async Task DeleteAsync(int id)
+    {
+        var entity = GetByIdAsync(id);
+        _db.Remove(entity);
+        await CommitAsync();
+    }
+
+    public async Task UpdateAsync(Product model)
+    {
+        _db.Set<Product>().Attach(model);
+        _db.Entry(model).State = EntityState.Modified;
+        await CommitAsync();
+    }
+
+    public async Task CommitAsync()
+    {
+        await _db.SaveChangesAsync();
     }
 }
