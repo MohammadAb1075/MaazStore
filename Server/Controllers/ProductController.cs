@@ -1,11 +1,11 @@
 ﻿using Domain.Products;
 using Microsoft.AspNetCore.Mvc;
+using Server.Models;
 
 namespace Server.Controllers
 {
     public class ProductController : Infrastructure.BaseController
     {
-
         #region field
         private ILogger<ProductController> _logger;
         private readonly IProductRepository _pr;
@@ -20,15 +20,16 @@ namespace Server.Controllers
         }
         #endregion
 
-
         #region Get
         [HttpGet]
-        public async Task<IActionResult> Index(int page)
+        public async Task<IActionResult> Index(int pageNumber = 1)
         {
-            _logger.LogInformation($"Show Product List With Browser : {Request.Headers["User_Agent"]}");
-            ViewData["Title"] = "Products";
-      
-            return View(result.ToList());
+            var viewModel = new ProductListViewModel
+            {
+                Data = await _pr.GetAllAsync(pageNumber, pageSize)
+            };
+            return View(viewModel);
         }
+        #endregion
     }
 }
