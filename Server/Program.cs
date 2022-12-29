@@ -1,13 +1,16 @@
 using Data.Common;
+using Data.Products;
+using Domain.Products;
 using Infrastructure.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddControllersWithViews();
 
-var connectionString = 
-    builder.Configuration.GetConnectionString("MazzDB");
+var connectionString =
+	builder.Configuration.GetConnectionString("ConnectionString");
 
 builder.Services.AddDbContext<DatabaseContext>
 	(optionsAction: options =>
@@ -19,7 +22,11 @@ builder.Services.AddDbContext<DatabaseContext>
 			.UseSqlServer(connectionString: connectionString);
 	});
 
-builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<Domain.Products.IProductRepository, Data.Products.ProductRepository>();
+builder.Services.AddMemoryCache();
+builder.Services.AddSession();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 var app = builder.Build();
 

@@ -1,5 +1,5 @@
 ﻿using Data.Config;
-using Domain;
+using Domain.Products;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Common;
@@ -14,6 +14,11 @@ public class DatabaseContext : DbContext
         Database.EnsureCreated();
     }
 
+    //public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
+    //{
+
+    //}
+
     public DbSet<Product> Products { get; set; }
 
 
@@ -26,10 +31,21 @@ public class DatabaseContext : DbContext
     {
         modelBuilder.ApplyConfigurationsFromAssembly
             (assembly: typeof(ProductConfig).Assembly);
-
-        modelBuilder.ApplyConfiguration(new ProductConfig());
-
-        base.OnModelCreating(modelBuilder);
+        //modelBuilder.ApplyConfiguration(new ProductConfig());
+        //base.OnModelCreating(modelBuilder);
     }
 
+    protected override void ConfigureConventions
+            (Microsoft.EntityFrameworkCore.ModelConfigurationBuilder builder)
+    {
+        builder.Properties<System.DateOnly>()
+            .HaveConversion<Conventions.DateTimeConventions.DateOnlyConverter>()
+            .HaveColumnType(typeName: nameof(System.DateTime.Date))
+            ;
+
+        builder.Properties<System.DateOnly?>()
+            .HaveConversion<Conventions.DateTimeConventions.NullableDateOnlyConverter>()
+            .HaveColumnType(typeName: nameof(System.DateTime.Date))
+            ;
+    }
 }
