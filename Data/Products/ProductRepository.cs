@@ -49,8 +49,8 @@ public class ProductRepository : IProductRepository
 
     public async Task DeleteAsync(int id)
     {
-        var entity = GetByIdAsync(id);
-        _db.Remove(entity);
+        var entity = await GetByIdAsync(id);
+        _db.Entry(entity).State = EntityState.Deleted;
         await CommitAsync();
     }
 
