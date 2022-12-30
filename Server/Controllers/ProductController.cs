@@ -24,6 +24,7 @@ namespace Server.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int pageNumber = 1)
         {
+            ViewData["Title"] = "لیست محصولات";
             var viewModel = new ProductListViewModel
             {
                 Data = await _pr.GetAllAsync(pageNumber, pageSize)
