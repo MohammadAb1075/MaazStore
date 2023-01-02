@@ -27,7 +27,7 @@ namespace Server.Controllers
             ViewData["Title"] = "لیست محصولات";
             var viewModel = new ProductListViewModel
             {
-                Data = await _pr.GetAllAsync(pageNumber, pageSize)
+                Data = await _pr.GetWithPaginationAsync(pageNumber, pageSize)
             };
             return View(viewModel);
         }
