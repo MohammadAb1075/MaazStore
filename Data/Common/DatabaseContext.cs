@@ -1,4 +1,6 @@
 ﻿using Data.Config;
+using Domain.FactorRows;
+using Domain.Factors;
 using Domain.Products;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +13,7 @@ public class DatabaseContext : DbContext
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         (DbContextOptions<DatabaseContext> options) : base(options: options)
     {
+        
         Database.EnsureCreated();
     }
 
@@ -20,7 +23,8 @@ public class DatabaseContext : DbContext
     //}
 
     public DbSet<Product> Products { get; set; }
-
+    public DbSet<FactorRow> FactorRows { get; set; }
+    public DbSet<Factor> Factors { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
