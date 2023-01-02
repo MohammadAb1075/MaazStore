@@ -14,7 +14,16 @@ public class ProductRepository : IProductRepository
         _db = db;
     }
 
-    public async Task<PagedData<Product>> GetAllAsync(int pageNumber, int pageSize)
+    public async Task<List<Product>> GetAllAsync()
+    {
+        var result =
+            await
+            _db.Products
+            .ToListAsync();
+        return result;
+    }
+    
+    public async Task<PagedData<Product>> GetWithPaginationAsync(int pageNumber, int pageSize)
     {
         var result = new PagedData<Product>
         {
@@ -60,7 +69,6 @@ public class ProductRepository : IProductRepository
         _db.Entry(model).State = EntityState.Modified;
         await CommitAsync();
     }
-
     public async Task CommitAsync()
     {
         await _db.SaveChangesAsync();
