@@ -1,0 +1,25 @@
+﻿
+#factorRowTable {
+    width: 100%
+}
+
+#factorRowTable thead {
+    width: calc(100%-1em);
+}
+
+#factorRowTable tbody {
+    display: block;
+    height: 10rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+    #factorRowTable thead, #factorRowTable tbody tr {
+        display: table;
+        width: 98%;
+        table-layout: fixed;
+    }
+
+#factorRowTable thead, #factorRowTable tbody, #factorRowTable td {
+    border: none !important;
+}
