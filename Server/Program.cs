@@ -1,5 +1,5 @@
 using Data.Common;
-using Data.Products;
+using Data.Repositories;
 using Domain.Products;
 using Infrastructure.Middlewares;
 using Microsoft.EntityFrameworkCore;
@@ -23,8 +23,8 @@ builder.Services.AddDbContext<DatabaseContext>
 	});
 
 
-builder.Services.AddScoped<Domain.Products.IProductRepository, Data.Products.ProductRepository>();
-builder.Services.AddScoped<Domain.Factors.IFactorRepository, Data.Factors.FactorRepository>();
+builder.Services.AddScoped<Domain.Products.IProductRepository, ProductRepository>();
+builder.Services.AddScoped<Domain.Factors.IFactorRepository, FactorRepository>();
 builder.Services.AddMemoryCache();
 builder.Services.AddSession();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
