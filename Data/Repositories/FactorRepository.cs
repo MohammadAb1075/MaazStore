@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Factors;
+namespace Data.Repositories;
 
 public class FactorRepository : IFactorRepository
 {
@@ -39,10 +39,10 @@ public class FactorRepository : IFactorRepository
         result.PageInfo.TotalCount = await _db.Products.CountAsync();
         return result;
     }
-    public async Task<Factor> GetByIdAsync(int id)
+    public async Task<Factor> GetByIdAsync(string id)
     {
         return await _db.Factors
-                    .Where(p => p.Id == id)
+                    .Where(p => p.Id.ToString() == id)
                     .FirstOrDefaultAsync();
     }
     public async Task CreateAsync(Factor model)
@@ -56,7 +56,7 @@ public class FactorRepository : IFactorRepository
         _db.Entry(model).State = EntityState.Modified;
         await CommitAsync();
     }
-    public async Task DeleteAsync(int id)
+    public async Task DeleteAsync(string id)
     {
         var entity = await GetByIdAsync(id);
         _db.Entry(entity).State = EntityState.Deleted;

@@ -2,7 +2,7 @@
 using Data.Common;
 using Domain.Products;
 using Microsoft.EntityFrameworkCore;
-namespace Data.Products;
+namespace Data.Repositories;
 
 public class ProductRepository : IProductRepository
 {
@@ -22,7 +22,7 @@ public class ProductRepository : IProductRepository
             .ToListAsync();
         return result;
     }
-    
+
     public async Task<PagedData<Product>> GetWithPaginationAsync(int pageNumber, int pageSize)
     {
         var result = new PagedData<Product>
@@ -34,13 +34,13 @@ public class ProductRepository : IProductRepository
             }
         };
 
-        result.Data = 
+        result.Data =
             await
             _db.Products
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
-        
+
         result.PageInfo.TotalCount = await _db.Products.CountAsync();
         return result;
     }
