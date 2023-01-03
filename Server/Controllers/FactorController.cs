@@ -87,7 +87,7 @@ public class FactorController : Infrastructure.BaseController
     }
 
     [HttpGet]
-    public async Task<IActionResult> Details(int id)
+    public async Task<IActionResult> Details(string id)
     {
         var factor = await _fr.GetByIdAsync(id);
 
@@ -101,10 +101,11 @@ public class FactorController : Infrastructure.BaseController
 
         var products = await _pr.GetAllAsync();
 
-        lstProducts = products.Select(ut => new SelectListItem()
+        lstProducts = products.Select(p => new SelectListItem()
         {
-            Value = ut.Id.ToString(),
-            Text = ut.Name
+            //Value = p.Id.ToString(),
+            Value = String.Join("$", new string[] { p.Id.ToString(), p.UnitPrice.ToString() }),
+            Text = p.Name
         }).ToList();
 
         var defItem = new SelectListItem()
@@ -117,5 +118,11 @@ public class FactorController : Infrastructure.BaseController
 
         return lstProducts;
     }
+
+//    private async Task<List<Product>> GetProductsAsync()
+//    {
+//        var products = await _pr.GetAllAsync();
+//        return products;
+//    }
 
 }
