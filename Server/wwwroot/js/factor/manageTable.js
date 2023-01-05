@@ -1,16 +1,13 @@
-﻿
-var table;
+﻿var table;
 var rowTable
 var rowOuterHtml = ''
-
-$(document).ready(function () {
+$(function () {
     table = $('#factorRowTable');
     rowTable = $('#factorRowTable').find('tbody tr').first()
     rowOuterHtml = rowTable.get(0).outerHTML;
 
     function AddItem(btn) {
         var lastRow = table.find('tbody tr').last();
-        console.log(lastRow)
         if (lastRow.length == 0) {
             table.find('tbody').append(rowOuterHtml)
         }
@@ -35,10 +32,8 @@ $(document).ready(function () {
         if (table.find('tbody tr').length > 1) {
             btn.parents('tr').remove()
         }
-        //CalcTotals();
-
-}
-
+        calcTotal(table);
+    }
 
     $('body').on('click', '.btnremove', function () {
         DeleteItem($(this))

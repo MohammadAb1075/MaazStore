@@ -19,13 +19,12 @@
 
 			<hr />
             <div clas="row">
-                <div class="col-12">
-        			<div class="mb-3">
+                <div class="col-md-12">
+        		    <div class="mb-3">
 				        <label asp-for="CustomerName" class="form-label"></label>
 				        <input asp-for="CustomerName" class="form-control" />
 				        <span asp-validation-for="CustomerName" class="text-danger"></span>
 			        </div>
-
 			        <div class="mb-3">
 				        <label asp-for="Description" class="form-label"></label>
 				        <textarea asp-for="Description" class="form-control"></textarea>
@@ -33,9 +32,9 @@
 			        </div>
                 </div>
 
-                <div class="col-12 table-responsive" style="font-size:10px">
+                <div class="col-12 table-responsive border" style="font-size:10px">
                     @*<table id="factorRowTable" class="table table-borderless table-sm mb-0 pb-0">*@
-                    <table id="factorRowTable" class="table table-borderless table-sm table-hover">
+                    <table id="factorRowTable" class="table table-borderless table-sm table-hover mb-0">
                         <thead class="table-primary">
                             <tr>
                                 <th scope="col">نام محصول</th>  
@@ -48,8 +47,8 @@
                                 <th scope="col">سود مشتری از تخفیف واحد</th>
                                 <th scope="col">سود مشتری از تخفیف کل</th>
                                 <th scope="col" style="width:60px;">
-                                    <button id='btnAddDetailRow' type="button" class="btn btn-sm btn-secondary visible">
-                                        افزودن
+                                    <button id='btnAddDetailRow' type="button" class="btn btn-sm btn-primary visible">
+                                        <i class="bi bi-plus-circle"></i>
                                     </button>
                                 </th>
                             </tr>
@@ -71,67 +70,77 @@
                                     <input type="hidden" asp-for="@factorRow.IsDeleted" />	
                                 </td>
                                 <td class="Quantity">
-                                    <input asp-for="@factorRow.Quantity"  class="form-control form-control-sm Quantity"/>
+                                    <input asp-for="@factorRow.Quantity"  class="form-control form-control-sm form-control-plaintext form-c Quantity calc" readonly/>
                                     <span asp-validation-for="@factorRow.Quantity" class="text-danger"></span>
                                 </td>
                                 <td class="UnitPrice">
-                                    <input asp-for="@product.UnitPrice"  class="form-control form-control-sm form-control-plaintext UnitPrice" readonly/>
+                                    <input asp-for="@product.UnitPrice"  class="form-control form-control-sm form-control-plaintext form-c UnitPrice" readonly/>
                                     <span asp-validation-for="@product.UnitPrice" class="text-danger"></span>
                                 </td>
                                 <td class="Discount"> 
-                                    <input asp-for="@factorRow.Discount"  class="form-control form-control-sm Discount"/>
+                                    <input asp-for="@factorRow.Discount"  class="form-control form-control-sm form-control-plaintext form-c Discount calc" readonly/>
                                     <span asp-validation-for="@factorRow.Discount" class="text-danger"></span>
                                 </td>
                                 <td class="DiscountedUnitPrice">
-                                    <input asp-for="@factorRow.DiscountedUnitPrice"  class="form-control form-control-sm form-control-plaintext" readonly/>
+                                    <input asp-for="@factorRow.DiscountedUnitPrice"  class="form-control form-control-sm form-control-plaintext DiscountedUnitPrice form-c" readonly/>
                                     <span asp-validation-for="@factorRow.DiscountedUnitPrice" class="text-danger"></span>
                                 </td>
                                 <td class="RowPriceTotal">
-                                    <input asp-for="@factorRow.RowPriceTotal"  class="form-control form-control-sm form-control-plaintext" readonly/>
+                                    <input asp-for="@factorRow.RowPriceTotal"  class="form-control form-control-sm form-control-plaintext RowPriceTotal form-c" readonly/>
                                     <span asp-validation-for="@factorRow.RowPriceTotal" class="text-danger"></span>
                                 </td>
                                 <td class="DiscountedRowPriceTotal">
-                                    <input asp-for="@factorRow.DiscountedRowPriceTotal"  class="form-control form-control-sm form-control-plaintext" readonly/>
+                                    <input asp-for="@factorRow.DiscountedRowPriceTotal"  class="form-control form-control-sm form-control-plaintext DiscountedRowPriceTotal form-c" readonly/>
                                     <span asp-validation-for="@factorRow.DiscountedRowPriceTotal" class="text-danger"></span>
                                 </td>
                                 <td class="CustomerProfitUnitDiscount"> 
-                                    <input asp-for="@factorRow.CustomerProfitUnitDiscount"  class="form-control form-control-sm form-control-plaintext" readonly/>
+                                    <input asp-for="@factorRow.CustomerProfitUnitDiscount"  class="form-control form-control-sm form-control-plaintext CustomerProfitUnitDiscount form-c" readonly/>
                                     <span asp-validation-for="@factorRow.CustomerProfitUnitDiscount" class="text-danger"></span>
                                 </td>
                                 <td class="CustomerProfitTotalDiscount">
-                                    <input asp-for="@factorRow.CustomerProfitTotalDiscount" class="form-control form-control-sm form-control-plaintext" readonly/>
+                                    <input asp-for="@factorRow.CustomerProfitTotalDiscount" class="form-control form-control-sm form-control-plaintext CustomerProfitTotalDiscount form-c" readonly/>
                                     <span asp-validation-for="@factorRow.CustomerProfitTotalDiscount" class="text-danger"></span>
                                 </td>
                                 <td style="width:60px;">
                                     <button id='btnremove-@i' type="button" class="btn btn-sm btn-danger visible btnremove">
-                                        حذف
+                                       <i class="bi bi-trash"></i>
                                     </button>
                                 </td>
                             </tr>
                             }   
                         </tbody>
 
-                        @*<tfoot class="table-secondary">
+                        <tfoot class="table-primary">
 				            <tr>
-                              <th colspan="5">
+                                <th class="pt-0 pb-0" colspan="5">
                                     <label asp-for="TotalPrice" class="form-label"></label>
                                 </th>
-                                <th colspan="5">
-                                    <input asp-for="TotalPrice" class="form-control form-control-sm form-control-plaintext TotalPrice" readonly/>
-                                    <span asp-validation-for="TotalPrice" class="text-danger"></span>
+                                <th class="text-start pt-0 pb-0" colspan="5">
+                                    <input asp-for="TotalPrice" class="form-control form-control-sm form-control-plaintext text-start form-c total TotalPrice" readonly disabled/>
+                                    <span asp-validation-for="TotalPrice" class="text-danger"></span> 
                                 </th>
-				            </tr>
+                            </tr>
                             <tr>
-                              <th colspan="5">
+                                <th class="pt-0 pb-0" colspan="5">
                                     <label asp-for="TotalDiscount" class="form-label"></label>
                                 </th>
-                                <th colspan="5">
-                                    <input asp-for="@Model.TotalDiscount" class="form-control form-control-sm form-control-plaintext TotalDiscount" readonly/>
-                                    <span asp-validation-for="TotalDiscount" class="text-danger"></span>
+                                <th class="text-start pt-0 pb-0" colspan="5">
+                                    <input asp-for="@Model.TotalDiscount" class="form-control form-control-sm form-control-plaintext text-start form-c total TotalDiscount" readonly disabled/>
+                                    <span asp-validation-for="TotalDiscount" class="text-danger"></span> 
                                 </th>
-				            </tr>
-			            </tfoot>*@
+                            </tr>                               
+                            <tr>
+                                <th class="pt-0 pb-0" colspan="5">
+                                    <label asp-for="Payable" class="form-label"></label>
+                                </th>
+                                <th class="text-start pt-0 pb-0" colspan="5">
+                                    <input asp-for="@Model.Payable" class="form-control form-control-sm form-control-plaintext text-start form-c total TotalDiscount" readonly disabled/>
+                                    <span asp-validation-for="Payable" class="text-danger"></span> 
+                                </th>
+                            </tr>     
+                            
 
+			            </tfoot>
                     </table>
                 </div>
             </div>
@@ -144,116 +153,17 @@
 *@
 
 			<button type="submit" class="btn btn-sm btn-primary">ایجاد</button>
-			<button type="reset" class="btn btn-secondary">حالت اولیه</button>
+			<button type="reset" class="btn btn-sm btn-secondary">حالت اولیه</button>
 		
     
         </div>
 	</div>
 </form>
 
-
-
-        
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("PartialViews/_ValidationScriptsPartial");} 
-     
+    @{await Html.RenderPartialAsync("PartialViews/_ValidationScriptsPartial");}      
+    <script src="~/js/factor/factor.js" asp-append-version="true"></script>
     <script src="~/js/factor/manageTable.js" asp-append-version="true"></script>
-@*<script>
-    function AddItem(btn) {
-        var table;
-        table = document.getElementById('factorRowTable');
-        var rows = table.getElementsByTagName('tr');
-        var rowOuterHtml = rows[rows.length - 1].outerHTML;
-
-        var lastrowIdx = rows.length - 2;
-
-        var nextrowIdx = eval(lastrowIdx) + 1;
-
-        rowOuterHtml = rowOuterHtml.replaceAll('_' + lastrowIdx + '_', '_' + nextrowIdx + '_');
-        rowOuterHtml = rowOuterHtml.replaceAll('[' + lastrowIdx + ']', '[' + nextrowIdx + ']');
-        rowOuterHtml = rowOuterHtml.replaceAll('-' + lastrowIdx, '-' + nextrowIdx);
-
-        var newRow = table.insertRow();
-        newRow.innerHTML = rowOuterHtml;
-
-        var x = document.getElementsByTagName("INPUT");
-
-        for (var cnt = 0; cnt < x.length; cnt++) {
-            if (x[cnt].type == "text" && x[cnt].id.indexOf('_' + nextrowIdx + '_') > 0) {
-                if (x[cnt].id.indexOf('Unit') == 0)
-                    x[cnt].value = '';
-            }
-            else if (x[cnt].type == "number" && x[cnt].id.indexOf('_' + nextrowIdx + '_') > 0)
-                x[cnt].value = 0;
-        }
-
-        rebindvalidators();
-    }
-
-    function rebindvalidators() {
-
-        var $form = $("#createForm");
-
-        $form.unbind();
-
-        $form.data("validator", null);
-
-        $.validator.unobtrusive.parse($form);
-
-        $form.validate($form.data("unobtrusiveValidation").options);
-
-    }
-
-    function DeleteItem(btn){
-	   var table = document.getElementById('factorRowTable');
-	   var rows = table.getElementsByTagName('tr');	           
-            
-	        //var btnIdx = btn.id.replaceAll('btnremove-', '');
-         //   var idOfQuantity = btnIdx + "__Quantity";
-         //   var txtQuantity = document.querySelector("[id$='" + idOfQuantity + "']");
-
-         //   txtQuantity.value = 0;
-                        
-
-         //   var idOfIsDeleted = btnIdx + "__IsDeleted";
-         //   var txtIsDeleted = document.querySelector("[id$='" + idOfIsDeleted + "']");            
-         //   txtIsDeleted.value="true";
-                       
-
-
-
-            $(btn).closest('tr').hide();
-
-            //CalcTotals();
-
-}
-
-</script>*@
-
-<script>
-$('table').find('tr td.Product .selectProduct').change(function() {
-    $(this).parents('tr').find('td.UnitPrice input').val(($(this).val().split('$')[1]))    
-})
-$('table').find('tr td .form-c').change(function() {
-    if (
-        $(this).hasClass('UnitPrice')||$(this).hasClass('Quantity')||$(this).hasClass('Discount')
-    
-       )
-       {
-        CalcTotals();
-        }
-            //if (e.target.classList.contains('QtyTotal')  
-            //|| e.target.classList.contains('PriceTotal')  
-            //|| e.target.classList.contains('FobTotal')
-            //|| event.target.id=='PoCurrencyId'            
-            //) 
-            //{
-            //    CalcTotals();
-            //} 
-        }
-        , false);
-
-
-</script>
+    <script src="~/js/factor/calculate.js" asp-append-version="true"></script>
+    <script src="~/js/factor/calcTotal.js" asp-append-version="true"></script>
 }

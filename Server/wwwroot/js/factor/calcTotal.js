@@ -1,53 +1,26 @@
-﻿function CalcTotals() {
-
-    var x = document.getElementsByClassName('QtyTotal');
-
-
-    var totalQty = 0;
-    var Amount = 0;
-    var totalAmount = 0;
-    var txtExchangeRate = eval(document.getElementById('txtExchangeRate').value);
-
-
-
-    var i;
-
-    for (i = 0; i < x.length; i++) {
-
-        var idofIsDeleted = i + "__IsDeleted";
-
-        var idofPrice = i + "__PrcInBaseCur";
-
-        var idofFob = i + "__Fob";
-
-        var idofTotal = i + "__Total";
-
-        var hidIsDelId = document.querySelector("[id$='" + idofIsDeleted + "']").id;
-
-        var priceTxtId = document.querySelector("[id$='" + idofPrice + "']").id;
-
-        var fobTxtId = document.querySelector("[id$='" + idofFob + "']").id;
-
-        var totalTxtId = document.querySelector("[id$='" + idofTotal + "']").id;
-
-
-        if (document.getElementById(hidIsDelId).value != "true") {
-            totalQty = totalQty + eval(x[i].value);
-
-            var txttotal = document.getElementById(totalTxtId);
-            var txtprice = document.getElementById(priceTxtId);
-            var txtfob = document.getElementById(fobTxtId);
-
-            txtprice.value = txtExchangeRate * eval(txtfob.value);
-
-            txttotal.value = eval(x[i].value) * txtprice.value;
-
-            totalAmount = eval(totalAmount) + eval(txttotal.value);
-        }
+﻿function calcTotal(tableElement) {
+    var TotalPrice = 0;
+    var TotalDiscount = 0;
+    var Payable = 0
+    $.each(tableElement.find('td.RowPriceTotal .form-c.RowPriceTotal'), function () {
+        TotalPrice += Number($(this).val());
+    })
+    $.each(tableElement.find('td.CustomerProfitTotalDiscount .form-c.CustomerProfitTotalDiscount'), function () {
+        TotalDiscount += Number($(this).val());
+    })
+    $.each(tableElement.find('td.DiscountedRowPriceTotal .form-c.DiscountedRowPriceTotal'), function () {
+        Payable += Number($(this).val());
+    })
+    var totalObject = {
+        TotalPrice: TotalPrice,
+        TotalDiscount: TotalDiscount,
+        Payable: Payable,
     }
 
-    document.getElementById('txtQtyTotal').value = totalQty;
-    document.getElementById('txtAmountTotal').value = totalAmount.toFixed(2);
+    $.each(totalObject, function (k, v) {
+        //console.log(k + '  ' + v)
+        console.log(tableElement.find('.form-c.' + k))
+        tableElement.find('.form-c.' + k).val(v)
+    })
 
-    return;
 }
