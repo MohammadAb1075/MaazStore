@@ -110,7 +110,7 @@ public class FactorController : Infrastructure.BaseController
 
         var defItem = new SelectListItem()
         {
-            Value = "",
+            Value = "$0",
             Text = "----انتخاب کنید----"
         };
 
