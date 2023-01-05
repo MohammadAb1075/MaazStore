@@ -21,8 +21,8 @@ public class Product
 
     [Required(ErrorMessage = "تکمیل فیلد {0} الزامی است!")]
     [Display(Name = "قیمت واحد (بدون تخفیف)")]
-    [Range(1, 10000000, ErrorMessage = "مقدار {0} باید بزرگ‌تر یا مساوی {1} باشد!")]
-    public double UnitPrice { get; set; } = 1;
+    [Range(1, double.MaxValue, ErrorMessage = "مقدار {0} باید بزرگ‌تر یا مساوی {1} باشد!")]
+    public double UnitPrice { get; set; } = 0;
     public virtual List<FactorRow> FactorRows { get; private set; } = new List<FactorRow>();
 
 }

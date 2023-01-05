@@ -42,7 +42,7 @@ public class Factor
     [Display(Name = "توضیحات")]
     [MaxLength(length: 2000,
         ErrorMessage = "حداکثر طول فیلد {0} می‌تواند {1} حرف باشد!")]
-    public string Description { get; set; }
+    public string? Description { get; set; }
     public virtual List<FactorRow> FactorRows { get; set; } = new List<FactorRow>();
 
     [NotMapped]

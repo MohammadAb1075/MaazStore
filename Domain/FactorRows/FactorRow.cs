@@ -65,14 +65,14 @@ public class FactorRow
     [Display(Name = "سود مشتری از تخفیف واحد")]
     public double CustomerProfitUnitDiscount
     {
-        get => this.Product.UnitPrice * (Convert.ToDouble(Discount)) / 100;
+        get => this.Product.UnitPrice * Convert.ToDouble(Discount) / 100;
     }
     
     [NotMapped]
     [Display(Name = "سود مشتری از تخفیف کل")]
     public double CustomerProfitTotalDiscount
     {
-        get => this.Quantity * this.Product.UnitPrice * (Convert.ToDouble(Discount)) / 100;
+        get => this.Quantity * this.Product.UnitPrice * Convert.ToDouble(Discount) / 100;
     }
     
     [NotMapped]
