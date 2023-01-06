@@ -1,5 +1,6 @@
 ﻿using Domain.Factors;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Data.Config;
@@ -16,7 +17,10 @@ public class FactorConfig : IEntityTypeConfiguration<Factor>
             .IsUnicode();
         builder
             .HasIndex(x => new { x.FactorNo })
-            .IsUnique(unique: true)
-            ;
+            .IsUnique(unique: true);
+        builder.Property(x => x.FactorNo)
+         .ValueGeneratedOnAdd()
+         .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
     }
+
 }

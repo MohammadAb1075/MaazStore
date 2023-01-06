@@ -1,4 +1,5 @@
-﻿using Domain.FactorRows;
+﻿using Common.DateTime;
+using Domain.FactorRows;
 using Domain.Products;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,19 +14,19 @@ public class Factor
 
     public Factor()
     {
-        Id = System.Guid.NewGuid();
+        //Id = System.Guid.NewGuid();
         InsertDateTime = DateTime.Now;
         UpdateDateTime = InsertDateTime;
     }
 
     [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.None)]
-    public System.Guid Id { get; private set; }
+    //[DatabaseGenerated(DatabaseGeneratedOption.None)]
+    public System.Guid Id { get; set; } = System.Guid.NewGuid();
 
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Required(ErrorMessage = "تکمیل فیلد {0} الزامی است!")]
     [Display(Name = "شماره فاکتور")]
-    public int FactorNo { get; private set; }
+    public int FactorNo { get; set; }
 
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
     [Display(Name = "تاریخ ثبت")]
@@ -46,6 +47,15 @@ public class Factor
         ErrorMessage = "حداکثر طول فیلد {0} می‌تواند {1} حرف باشد!")]
     public string? Description { get; set; }
     public virtual List<FactorRow> FactorRows { get; set; } = new List<FactorRow>();
+
+    //[Display(Name = "تاریخ ثبت")]
+    //[NotMapped]
+    //public string InsertDateTimeShamsi { get => PersianDate.ConvertToDateString(InsertDateTime).ToString(); }
+
+    [Display(Name = "تاریخ ثبت")]
+    [NotMapped]
+    public string InsertDateTimeShamsi { get => InsertDateTime.MiladiToShamsi(); }
+
 
     [NotMapped]
     [Display(Name = "جمع کل")]
