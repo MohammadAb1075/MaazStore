@@ -137,14 +137,11 @@ public class FactorController : Infrastructure.BaseController
         return View(item);
     }
 
-
-
     [HttpPost]
     public async Task<IActionResult> Edit(Factor model)
     {
-        model.FactorRows.RemoveAll(a => a.Quantity == 0);
-
-        foreach (var item in model.FactorRows)
+        model.FactorRows.RemoveAll(a => a.Quantity == 0 || a.IsDeleted == true);
+        foreach (var item in model.FactorRows) 
         {
             var P = await _pr.GetByIdAsync(item.ProductId);
             item.Product = P;
