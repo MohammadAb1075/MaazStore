@@ -2,37 +2,49 @@
 @model Domain.Factors.Factor
 
 @{
-    ViewData["Title"] = "Create";
-    var ProductList = ViewBag.ProductList;
-     ViewData["ProductList"] = ViewBag.ProductList;
+    ViewData["Title"] = "Edit";
+    //var ProductList = ViewBag.ProductList;
+     //ViewData["ProductList"] = ViewBag.ProductList;
 }
 
 @section StyleSheets {
     <link rel="stylesheet" href="~/css/factor/factor.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/factor/table.css" asp-append-version="true" />
 }
-<form id="factorForm" method="post" asp-action="Create" enctype="multipart/form-data">
+<form id="factorForm" method="post" asp-action="Edit" enctype="multipart/form-data">
     <div class="row">
 		<div class="col-12 p-3 col-md-10 offset-md-1 p-md-5 bg-light border border-2 rounded-3 shadow-lg">
 			<legend>
-				فاکتور جدید
+				ویرایش فاکتور
 			</legend>
+            <div>
+                <div class="col-md-6">
+				        <label asp-for="FactorNo" class="form-label"></label>
+                        <input asp-for="FactorNo"  class="form-control form-control-sm form-control-plaintext bg-light" readonly disabled/>          
+			        <div class="mb-3">
+				        <label asp-for="InsertDateTime" class="form-label"></label>
+                        <input asp-for="InsertDateTime"  class="form-control form-control-sm form-control-plaintext bg-light" readonly/>
+                        <span asp-validation-for="InsertDateTime" class="text-danger"></span>                    
+                    </div>
 
+                </div>
+            </div>
 			<hr />
-            <div clas="row">
-                <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
         		    <div class="mb-3">
 				        <label asp-for="CustomerName" class="form-label"></label>
 				        <input asp-for="CustomerName" class="form-control" />
 				        <span asp-validation-for="CustomerName" class="text-danger"></span>
 			        </div>
+			    </div>
+                <div class="col-md-6">
 			        <div class="mb-3">
 				        <label asp-for="Description" class="form-label"></label>
 				        <textarea asp-for="Description" class="form-control"></textarea>
 				        <span asp-validation-for="Description" class="text-danger"></span>
 			        </div>
                 </div>
-
                 <div class="col-12 table-responsive border" style="font-size:10px">
                     @*<table id="factorRowTable" class="table table-borderless table-sm mb-0 pb-0">*@
                     <table id="factorRowTable" class="table table-borderless table-sm table-hover mb-0">
@@ -61,12 +73,15 @@
                                 var product = factorRow.Product;
                                 <tr>
                                 <td class="Product">
-                                    <select asp-for="@Model.FactorRows[i].Product.Name" class="form-select form-select-sm selectProduct"
-										    asp-items="ViewBag.ProductList"></select>
-@*                                    <select asp-for="@(product.Name)" asp-items="@(new SelectList(ProductList, String.Join("$", new string[] { nameof(Product.Id).ToString(), nameof(Product.UnitPrice) }), nameof(Product.Name)))" class="form-select form-select-sm selectProduct">
+                                    @*@Html.DropDownListFor(x => x.FactorRows[i].ProductDesc, new SelectList(ViewBag.ProductList, "Value", "Text"))*@
+                                    @*@Html.DropDownListFor(x => x.FactorRows[i].Product.Name, new SelectList(ViewBag.ProductList, "id", "value"), new {@class = "form-select form-select-sm selectProduct"})*@
+                                    <select asp-for="@Model.FactorRows[i].ProductDesc" class="form-select form-select-sm form-c selectProduct"
+										    asp-items="ViewBag.ProductList">
+                                    </select>
+@*                                    <select asp-for="@Model.FactorRows[i].Product.Name" asp-items="@(new SelectList(ViewBag.ProductList, nameof(Product.Id), nameof(Product.Name)))" class="form-select form-select-sm selectProduct">
                                         <option value="0">----انتخاب کنید----</option>
                                     </select>*@
-                                    <span asp-validation-for="@Model.FactorRows[i].ProductId" class="text-danger"></span>
+                                    <span asp-validation-for="@Model.FactorRows[i].Product.Name" class="text-danger"></span>
                                     @*<input type="hidden" asp-for="@Model.FactorRows[i].Product.Name" class="Name"/>	*@
                                     <input type="hidden" asp-for="@Model.FactorRows[i].Product.Id" class="ProductId"/>	
                                     <input type="hidden" asp-for="@Model.FactorRows[i].ProductId" class="ProductId"/>	
@@ -151,7 +166,7 @@
 										    asp-items="ViewBag.ProductList" style="visibility: hidden;" ></select>        
                      <input id="txtValue"  class="form-control col-2 invisible" />   
             </div>*@
-
+@*
 
      <div class="form-group btn-group col-1">
          <div  class="form-group invisible">        
@@ -161,7 +176,7 @@
                  <input id="txtValue"  class="form-control col-2 invisible" />   
         </div>
     </div> 
-
+*@
 
 
 			<button type="submit" class="btn btn-sm btn-primary">ایجاد</button>
