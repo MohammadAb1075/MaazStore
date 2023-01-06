@@ -1,12 +1,8 @@
 ﻿using Common.Paginations;
 using Data.Common;
+using Domain.FactorRows;
 using Domain.Factors;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.Repositories;
 
@@ -36,7 +32,7 @@ public class FactorRepository : IFactorRepository
             .Take(pageSize)
             .ToListAsync();
 
-        result.PageInfo.TotalCount = await _db.Products.CountAsync();
+        result.PageInfo.TotalCount = await _db.Factors.CountAsync();
         return result;
     }
     public async Task<Factor> GetByIdAsync(string id)
@@ -52,9 +48,15 @@ public class FactorRepository : IFactorRepository
     }
     public async Task UpdateAsync(Factor model)
     {
+
+        List<FactorRow> factorRows = _db.FactorRows.Where(x => x.FactorId == model.Id).ToList();
+        _db.FactorRows.RemoveRange(factorRows);
         _db.Set<Factor>().Attach(model);
+        _db.Attach(model);
         _db.Entry(model).State = EntityState.Modified;
+        _db.FactorRows.AddRange(model.FactorRows);
         await CommitAsync();
+
     }
     public async Task DeleteAsync(string id)
     {
