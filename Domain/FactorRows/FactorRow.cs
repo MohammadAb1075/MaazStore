@@ -40,7 +40,7 @@ public class FactorRow
 
     [Required(ErrorMessage = "تکمیل فیلد {0} الزامی است!")]
     [Display(Name = "محصول")]
-    public virtual Product Product { get; private set; } = new Product();
+    public virtual Product Product { get; set; } = new Product();
 
     [NotMapped]
     [Display(Name = "قیمت واحد (با تخفیف)")]
@@ -73,6 +73,12 @@ public class FactorRow
     public double CustomerProfitTotalDiscount
     {
         get => this.Quantity * this.Product.UnitPrice * Convert.ToDouble(Discount) / 100;
+    }
+    [NotMapped]
+    [Display(Name = "محصول")]
+    public string ProductDesc
+    {
+        get => $"{this.Product.Id}${this.Product.UnitPrice}";
     }
     
     [NotMapped]
