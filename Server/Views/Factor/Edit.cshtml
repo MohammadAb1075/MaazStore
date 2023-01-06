@@ -14,19 +14,20 @@
 <form id="factorForm" method="post" asp-action="Edit" enctype="multipart/form-data">
     <div class="row">
 		<div class="col-12 p-3 col-md-10 offset-md-1 p-md-5 bg-light border border-2 rounded-3 shadow-lg">
-			<legend>
-				ویرایش فاکتور
-			</legend>
-            <div>
-                <div class="col-md-6">
-				        <label asp-for="FactorNo" class="form-label"></label>
-                        <input asp-for="FactorNo"  class="form-control form-control-sm form-control-plaintext bg-light" readonly disabled/>          
-			        <div class="mb-3">
-				        <label asp-for="InsertDateTime" class="form-label"></label>
-                        <input asp-for="InsertDateTime"  class="form-control form-control-sm form-control-plaintext bg-light" readonly/>
-                        <span asp-validation-for="InsertDateTime" class="text-danger"></span>                    
-                    </div>
-
+            <div class="row">
+                <div class="col-md-12 col-lg-3">
+			        <legend>
+				        ویرایش فاکتور
+			        </legend>
+                </div>
+                
+                <div class="col-md-12 col-lg-9 d-inline mb-3">
+                    <input asp-for="Id"  type="hidden"readonly disabled/> 
+				    <label asp-for="FactorNo" class="text-primary"></label>
+                    <input asp-for="FactorNo" class="form-control form-control-sm form-control-plaintext bg-light d-inline text-start w-auto" readonly disabled/> 
+                    <span asp-validation-for="FactorNo" class="text-danger"></span>
+				    <label asp-for="InsertDateTimeShamsi" class="text-primary"></label>
+                    <input asp-for="InsertDateTimeShamsi"  class="form-control form-control-sm form-control-plaintext bg-light d-inline text-start w-auto" readonly disabled/>                       
                 </div>
             </div>
 			<hr />
@@ -45,7 +46,7 @@
 				        <span asp-validation-for="Description" class="text-danger"></span>
 			        </div>
                 </div>
-                <div class="col-12 table-responsive border" style="font-size:10px">
+                <div class="col-12 table-responsive border ps-0 pe-0" style="font-size:10px">
                     @*<table id="factorRowTable" class="table table-borderless table-sm mb-0 pb-0">*@
                     <table id="factorRowTable" class="table table-borderless table-sm table-hover mb-0">
                         <thead class="table-primary">
@@ -75,7 +76,7 @@
                                 <td class="Product">
                                     @*@Html.DropDownListFor(x => x.FactorRows[i].ProductDesc, new SelectList(ViewBag.ProductList, "Value", "Text"))*@
                                     @*@Html.DropDownListFor(x => x.FactorRows[i].Product.Name, new SelectList(ViewBag.ProductList, "id", "value"), new {@class = "form-select form-select-sm selectProduct"})*@
-                                    <select asp-for="@Model.FactorRows[i].ProductDesc" class="form-select form-select-sm form-c selectProduct"
+                                    <select asp-for="@Model.FactorRows[i].ProductDesc" class="form-select-sm form-c selectProduct"
 										    asp-items="ViewBag.ProductList">
                                     </select>
 @*                                    <select asp-for="@Model.FactorRows[i].Product.Name" asp-items="@(new SelectList(ViewBag.ProductList, nameof(Product.Id), nameof(Product.Name)))" class="form-select form-select-sm selectProduct">
@@ -161,27 +162,8 @@
                     </table>
                 </div>
             </div>
-@*             <div  class="form-group invisible">         
-                      <select id="mySelect" class="form-control" size="5" 
-										    asp-items="ViewBag.ProductList" style="visibility: hidden;" ></select>        
-                     <input id="txtValue"  class="form-control col-2 invisible" />   
-            </div>*@
-@*
 
-     <div class="form-group btn-group col-1">
-         <div  class="form-group invisible">        
-                <select id="mySelect" class="form-control"  size="5" 
-                style="visibility: hidden;" asp-items="ViewBag.ProductList" >       
-                </select>        
-                 <input id="txtValue"  class="form-control col-2 invisible" />   
-        </div>
-    </div> 
-*@
-
-
-			<button type="submit" class="btn btn-sm btn-primary">ایجاد</button>
-			<button type="reset" class="btn btn-sm btn-secondary">حالت اولیه</button>
-		
+			<button type="submit" class="btn btn-sm btn-primary">ذخیره</button>
     
         </div>
 	</div>
@@ -193,4 +175,8 @@
     <script src="~/js/factor/manageTable.js" asp-append-version="true"></script>
     <script src="~/js/factor/calculate.js" asp-append-version="true"></script>
     <script src="~/js/factor/calcTotal.js" asp-append-version="true"></script>
+    <script>
+            $('table').find('.calc').removeClass('form-control-plaintext').removeAttr('readonly', 'readonly')
+    </script>
+
 }

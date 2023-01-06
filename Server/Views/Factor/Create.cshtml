@@ -33,7 +33,7 @@
 			        </div>
                 </div>
 
-                <div class="col-12 table-responsive border" style="font-size:10px">
+                <div class="col-12 table-responsive border ps-0 pe-0" style="font-size:10px">
                     @*<table id="factorRowTable" class="table table-borderless table-sm mb-0 pb-0">*@
                     <table id="factorRowTable" class="table table-borderless table-sm table-hover mb-0">
                         <thead class="table-primary">
@@ -61,45 +61,51 @@
                                 var product = factorRow.Product;
                                 <tr>
                                 <td class="Product">
-                                    <select asp-for="@Model.FactorRows[i].Product.Name" class="form-select form-select-sm selectProduct"
-										    asp-items="ViewBag.ProductList"></select>
-@*                                    <select asp-for="@(product.Name)" asp-items="@(new SelectList(ProductList, String.Join("$", new string[] { nameof(Product.Id).ToString(), nameof(Product.UnitPrice) }), nameof(Product.Name)))" class="form-select form-select-sm selectProduct">
-                                        <option value="0">----انتخاب کنید----</option>
-                                    </select>*@
+                                   @*@Html.DropDownListFor(x => x.FactorRows[i].ProductDesc, new SelectList(ViewBag.ProductList, "id", "value"), new {@class = "form-select form-select-sm selectProduct"})*@
+                                    <select asp-for="@Model.FactorRows[i].ProductDesc" class="form-select-sm form-c selectProduct"
+										    asp-items="ViewBag.ProductList">
+                                    </select>
                                     <span asp-validation-for="@Model.FactorRows[i].ProductId" class="text-danger"></span>
-                                    @*<input type="hidden" asp-for="@Model.FactorRows[i].Product.Name" class="Name"/>	*@
                                     <input type="hidden" asp-for="@Model.FactorRows[i].Product.Id" class="ProductId"/>	
                                     <input type="hidden" asp-for="@Model.FactorRows[i].ProductId" class="ProductId"/>	
-                                    <input type="hidden" asp-for="@Model.FactorRows[i].IsDeleted" />	
+                                    <input type="hidden" asp-for="@Model.FactorRows[i].IsDeleted" class="IsDeleted"/>	
                                 </td>
                                 <td class="Quantity">
+                                    @*@Html.EditorFor(x=>x.FactorRows[i].Quantity, new{ htmlAttributes = new{@class="form-control form-control-sm form-control-plaintext form-c Quantity calc"}})*@
                                     <input asp-for="@Model.FactorRows[i].Quantity"  class="form-control form-control-sm form-control-plaintext form-c Quantity calc" readonly/>
                                     <span asp-validation-for="@Model.FactorRows[i].Quantity" class="text-danger"></span>
                                 </td>
                                 <td class="UnitPrice">
+                                    @*@Html.EditorFor(x=>x.FactorRows[i].Product.UnitPrice, new{ htmlAttributes = new{@class="form-control form-control-sm form-control-plaintext form-c UnitPrice"}})*@
                                     <input asp-for="@Model.FactorRows[i].Product.UnitPrice"  class="form-control form-control-sm form-control-plaintext form-c UnitPrice" readonly/>
                                 </td>
                                 <td class="Discount"> 
+                                    @*@Html.EditorFor(x=>x.FactorRows[i].Discount, new{ htmlAttributes = new{@class="form-control form-control-sm form-control-plaintext form-c Discount calc"}})*@
                                     <input asp-for="@Model.FactorRows[i].Discount"  class="form-control form-control-sm form-control-plaintext form-c Discount calc" readonly/>
                                     <span asp-validation-for="@Model.FactorRows[i].Discount" class="text-danger"></span>
                                 </td>
                                 <td class="DiscountedUnitPrice">
+                                    @*@Html.EditorFor(x=>x.FactorRows[i].DiscountedUnitPrice, new{ htmlAttributes = new{@class="form-control form-control-sm form-control-plaintext form-c DiscountedUnitPrice"}})*@
                                     <input asp-for="@Model.FactorRows[i].DiscountedUnitPrice"  class="form-control form-control-sm form-control-plaintext DiscountedUnitPrice form-c" readonly/>
                                     <span asp-validation-for="@Model.FactorRows[i].DiscountedUnitPrice" class="text-danger"></span>
                                 </td>
                                 <td class="RowPriceTotal">
-                                    <input asp-for="@Model.FactorRows[i].RowPriceTotal"  class="form-control form-control-sm form-control-plaintext RowPriceTotal form-c" readonly/>
+                                    @*@Html.EditorFor(x=>x.FactorRows[i].Discount, new{ htmlAttributes = new{@class="form-control form-control-sm form-control-plaintext form-c RowPriceTotal"}})*@
+                                    <input asp-for="@Model.FactorRows[i].RowPriceTotal"  class="form-control form-control-sm form-control-plaintext form-c RowPriceTotal" readonly/>
                                     <span asp-validation-for="@Model.FactorRows[i].RowPriceTotal" class="text-danger"></span>
                                 </td>
                                 <td class="DiscountedRowPriceTotal">
+                                    @*@Html.EditorFor(x=>x.FactorRows[i].DiscountedRowPriceTotal, new{ htmlAttributes = new{@class="form-control form-control-sm form-control-plaintext form-c DiscountedRowPriceTotal"}})*@
                                     <input asp-for="@Model.FactorRows[i].DiscountedRowPriceTotal"  class="form-control form-control-sm form-control-plaintext DiscountedRowPriceTotal form-c" readonly/>
                                     <span asp-validation-for="@Model.FactorRows[i].DiscountedRowPriceTotal" class="text-danger"></span>
                                 </td>
                                 <td class="CustomerProfitUnitDiscount"> 
+                                    @*@Html.EditorFor(x=>x.FactorRows[i].CustomerProfitUnitDiscount, new{ htmlAttributes = new{@class="form-control form-control-sm form-control-plaintext form-c CustomerProfitUnitDiscount"}})*@
                                     <input asp-for="@Model.FactorRows[i].CustomerProfitUnitDiscount"  class="form-control form-control-sm form-control-plaintext CustomerProfitUnitDiscount form-c" readonly/>
                                     <span asp-validation-for="@Model.FactorRows[i].CustomerProfitUnitDiscount" class="text-danger"></span>
                                 </td>
                                 <td class="CustomerProfitTotalDiscount">
+                                    @*@Html.EditorFor(x=>x.FactorRows[i].CustomerProfitTotalDiscount, new{ htmlAttributes = new{@class="form-control form-control-sm form-control-plaintext form-c CustomerProfitTotalDiscount"}})*@
                                     <input asp-for="@Model.FactorRows[i].CustomerProfitTotalDiscount" class="form-control form-control-sm form-control-plaintext CustomerProfitTotalDiscount form-c" readonly/>
                                     <span asp-validation-for="@Model.FactorRows[i].CustomerProfitTotalDiscount" class="text-danger"></span>
                                 </td>
@@ -112,7 +118,7 @@
                             }   
                         </tbody>
 
-                        <tfoot class="table-primary">
+                        @*<tfoot class="table-primary">
 				            <tr>
                                 <th class="pt-0 pb-0" colspan="5">
                                     <label asp-for="TotalPrice" class="form-label"></label>
@@ -139,35 +145,12 @@
                                     <input asp-for="@Model.Payable" class="form-control form-control-sm form-control-plaintext text-start form-c total Payable" readonly disabled/>
                                     <span asp-validation-for="Payable" class="text-danger"></span> 
                                 </th>
-                            </tr>     
-                            
-
-			            </tfoot>
+                            </tr>                             
+			            </tfoot>*@
                     </table>
                 </div>
             </div>
-@*             <div  class="form-group invisible">         
-                      <select id="mySelect" class="form-control" size="5" 
-										    asp-items="ViewBag.ProductList" style="visibility: hidden;" ></select>        
-                     <input id="txtValue"  class="form-control col-2 invisible" />   
-            </div>*@
-
-
-     <div class="form-group btn-group col-1">
-         <div  class="form-group invisible">        
-                <select id="mySelect" class="form-control"  size="5" 
-                style="visibility: hidden;" asp-items="ViewBag.ProductList" >       
-                </select>        
-                 <input id="txtValue"  class="form-control col-2 invisible" />   
-        </div>
-    </div> 
-
-
-
 			<button type="submit" class="btn btn-sm btn-primary">ایجاد</button>
-			<button type="reset" class="btn btn-sm btn-secondary">حالت اولیه</button>
-		
-    
         </div>
 	</div>
 </form>
