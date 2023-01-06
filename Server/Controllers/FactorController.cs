@@ -17,7 +17,6 @@ public class FactorController : Infrastructure.BaseController
     private int pageSize = 5;
     #endregion
 
-
     #region Constructor
     public FactorController(ILogger<ProductController> logger, IFactorRepository factorRepository, IProductRepository productRepository)
     {
@@ -60,35 +59,6 @@ public class FactorController : Infrastructure.BaseController
     [HttpPost]
     public async Task<IActionResult> Create(Factor model)
     {
-
-        //    item.PoDetails.RemoveAll(a => a.Quantity == 0);
-        //    bool bolret = false;
-        //    string errMessage = "";
-        //    try
-        //    {
-        //        bolret = _Repo.Create(item);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        errMessage = errMessage + " " + ex.Message;
-        //    }
-
-
-        //    if (bolret == false)
-        //    {
-        //        errMessage = errMessage + " " + _Repo.GetErrors();
-
-        //        TempData["ErrorMessage"] = errMessage;
-        //        ModelState.AddModelError("", errMessage);
-        //        return View(item);
-        //    }
-        //    else
-        //    {
-        //        TempData["SuccessMessage"] = "" + item.PoNumber + " Created Successfully";
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //}
-
         model.FactorRows.RemoveAll(a => a.Quantity == 0 || a.IsDeleted == true);
 
         //foreach (var item in model.FactorRows.Where(x => x.Quantity == 0).ToList())
@@ -111,23 +81,9 @@ public class FactorController : Infrastructure.BaseController
         {
             errMessage = errMessage + " " + ex.Message;
         }
-        //if (bolret == false)
-        //{
-        //    errMessage = errMessage + " " + _Repo.GetErrors();
-
-        //    TempData["ErrorMessage"] = errMessage;
-        //    ModelState.AddModelError("", errMessage);
-        //    return View(item);
-        //}
-        //else
-        //{
-        //    TempData["SuccessMessage"] = "" + item.PoNumber + " Created Successfully";
-        //    return RedirectToAction(nameof(Index));
-        //}
         return RedirectToAction(nameof(Index));
         //return View(model);
     }
-
 
     [HttpGet]
     public async Task<IActionResult> Edit(string id)
@@ -159,6 +115,15 @@ public class FactorController : Infrastructure.BaseController
         }
         return RedirectToAction(nameof(Index));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Delete(string id)
+    {
+        await _fr.DeleteAsync(id);
+        return RedirectToAction("index");
+        //return View();
+    }
+
 
     [HttpGet]
     public async Task<IActionResult> Details(string id)
