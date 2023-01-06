@@ -1,5 +1,6 @@
 ﻿using Common.Paginations;
 using Data.Common;
+using Domain.FactorRows;
 using Domain.Products;
 using Microsoft.EntityFrameworkCore;
 namespace Data.Repositories;
@@ -8,10 +9,11 @@ public class ProductRepository : IProductRepository
 {
 
     private readonly DatabaseContext _db;
-
-    public ProductRepository(DatabaseContext db)
+    private readonly IFactorRowRepository _frr;
+    public ProductRepository(DatabaseContext db, IFactorRowRepository frr)
     {
         _db = db;
+        _frr = frr;
     }
 
     public async Task<List<Product>> GetAllAsync()
@@ -59,6 +61,7 @@ public class ProductRepository : IProductRepository
     public async Task DeleteAsync(int id)
     {
         var entity = await GetByIdAsync(id);
+        await _frr.DeleteFactorRowsByProductAsync(entity);
         _db.Entry(entity).State = EntityState.Deleted;
         await CommitAsync();
     }

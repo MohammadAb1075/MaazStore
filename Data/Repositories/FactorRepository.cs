@@ -9,10 +9,12 @@ namespace Data.Repositories;
 public class FactorRepository : IFactorRepository
 {
     private readonly DatabaseContext _db;
+    private readonly IFactorRowRepository _frr;
 
-    public FactorRepository(DatabaseContext db)
+    public FactorRepository(DatabaseContext db, IFactorRowRepository frr)
     {
         _db = db;
+        _frr = frr; 
     }
     public async Task<PagedData<Factor>> GetWithPaginationAsync(int pageNumber, int pageSize)
     {
@@ -49,19 +51,18 @@ public class FactorRepository : IFactorRepository
     }
     public async Task UpdateAsync(Factor model)
     {
-
-        List<FactorRow> factorRows = _db.FactorRows.Where(x => x.FactorId.ToString() == model.Id.ToString()).ToList();
-        _db.FactorRows.RemoveRange(factorRows);
-        _db.Set<Factor>().Attach(model);
+        await _frr.DeleteFactorRowsByFactorAsync(model);
         _db.Attach(model);
         _db.Entry(model).State = EntityState.Modified;
         _db.FactorRows.AddRange(model.FactorRows);
         await CommitAsync();
-
     }
     public async Task DeleteAsync(string id)
     {
         var entity = await GetByIdAsync(id);
+        await _frr.DeleteFactorRowsByFactorAsync(entity);
+        //foreach (var item in entity.FactorRows)
+        //    _db.FactorRows.Remove(item);
         _db.Entry(entity).State = EntityState.Deleted;
         await CommitAsync();
     }

@@ -3,7 +3,6 @@
 public interface IFactorRepository
 {
     Task<string> GetErrorsAsync();
-    
     Task<Common.Paginations.PagedData<Factor>> GetWithPaginationAsync(int pageNumber, int pageSize);
     Task<Factor> GetByIdAsync(string id);
     Task CreateAsync(Factor model);
