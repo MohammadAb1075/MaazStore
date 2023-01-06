@@ -16,7 +16,7 @@ public class FactorRowConfig : IEntityTypeConfiguration<FactorRow>
         builder.HasOne(x => x.Factor)
               .WithMany(y => y.FactorRows)
               .HasForeignKey(z => z.FactorId)
-              .OnDelete(DeleteBehavior.ClientSetNull)
+              .OnDelete(DeleteBehavior.Cascade)
               .HasConstraintName("FK_FactorRows_Factors");
         builder.HasOne(x => x.Product)
               .WithMany(y => y.FactorRows)
