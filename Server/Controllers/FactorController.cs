@@ -61,35 +61,35 @@ public class FactorController : Infrastructure.BaseController
     public async Task<IActionResult> Create(Factor model)
     {
 
-    //    item.PoDetails.RemoveAll(a => a.Quantity == 0);
-    //    bool bolret = false;
-    //    string errMessage = "";
-    //    try
-    //    {
-    //        bolret = _Repo.Create(item);
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        errMessage = errMessage + " " + ex.Message;
-    //    }
+        //    item.PoDetails.RemoveAll(a => a.Quantity == 0);
+        //    bool bolret = false;
+        //    string errMessage = "";
+        //    try
+        //    {
+        //        bolret = _Repo.Create(item);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        errMessage = errMessage + " " + ex.Message;
+        //    }
 
 
-    //    if (bolret == false)
-    //    {
-    //        errMessage = errMessage + " " + _Repo.GetErrors();
+        //    if (bolret == false)
+        //    {
+        //        errMessage = errMessage + " " + _Repo.GetErrors();
 
-    //        TempData["ErrorMessage"] = errMessage;
-    //        ModelState.AddModelError("", errMessage);
-    //        return View(item);
-    //    }
-    //    else
-    //    {
-    //        TempData["SuccessMessage"] = "" + item.PoNumber + " Created Successfully";
-    //        return RedirectToAction(nameof(Index));
-    //    }
-    //}
+        //        TempData["ErrorMessage"] = errMessage;
+        //        ModelState.AddModelError("", errMessage);
+        //        return View(item);
+        //    }
+        //    else
+        //    {
+        //        TempData["SuccessMessage"] = "" + item.PoNumber + " Created Successfully";
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //}
 
-        model.FactorRows.RemoveAll(a => a.Quantity == 0);
+        model.FactorRows.RemoveAll(a => a.Quantity == 0 || a.IsDeleted == true);
 
         //foreach (var item in model.FactorRows.Where(x => x.Quantity == 0).ToList())
         //{
