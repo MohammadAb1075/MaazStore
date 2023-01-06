@@ -3,8 +3,6 @@
 
 @{
     ViewData["Title"] = "Edit";
-    //var ProductList = ViewBag.ProductList;
-     //ViewData["ProductList"] = ViewBag.ProductList;
 }
 
 @section StyleSheets {
@@ -22,7 +20,7 @@
                 </div>
                 
                 <div class="col-md-12 col-lg-9 d-inline mb-3">
-                    <input asp-for="Id"  type="hidden"readonly disabled/> 
+                    <input asp-for="Id" type="hidden"readonly disabled/> 
 				    <label asp-for="FactorNo" class="text-primary"></label>
                     <input asp-for="FactorNo" class="form-control form-control-sm form-control-plaintext bg-light d-inline text-start w-auto" readonly disabled/> 
                     <span asp-validation-for="FactorNo" class="text-danger"></span>
@@ -162,19 +160,19 @@
                     </table>
                 </div>
             </div>
-
 			<button type="submit" class="btn btn-sm btn-primary">ذخیره</button>
-    
+            <button type="button" class="btn btn-sm btn-danger deleteItem" linkAction="@Model.Id">حذف سند</button>
         </div>
 	</div>
 </form>
-
+<partial name="PartialViews/_ConfirmModal" />
 @section Scripts {
     @{await Html.RenderPartialAsync("PartialViews/_ValidationScriptsPartial");}      
     <script src="~/js/factor/factor.js" asp-append-version="true"></script>
     <script src="~/js/factor/manageTable.js" asp-append-version="true"></script>
     <script src="~/js/factor/calculate.js" asp-append-version="true"></script>
     <script src="~/js/factor/calcTotal.js" asp-append-version="true"></script>
+    <script src="~/js/factor/confirmModal.js" asp-append-version="true"></script>
     <script>
             $('table').find('.calc').removeClass('form-control-plaintext').removeAttr('readonly', 'readonly')
     </script>
