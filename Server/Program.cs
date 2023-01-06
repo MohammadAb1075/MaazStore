@@ -25,6 +25,7 @@ builder.Services.AddDbContext<DatabaseContext>
 
 builder.Services.AddScoped<Domain.Products.IProductRepository, ProductRepository>();
 builder.Services.AddScoped<Domain.Factors.IFactorRepository, FactorRepository>();
+builder.Services.AddScoped<Domain.FactorRows.IFactorRowRepository, FactorRowRepository>();
 builder.Services.AddMemoryCache();
 builder.Services.AddSession();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
