@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Create";
     var ProductList = ViewBag.ProductList;
-     ViewData["ProductList"] = ViewBag.ProductList;
+    ViewData["ProductList"] = ViewBag.ProductList;
 }
 
 @section StyleSheets {
@@ -19,13 +19,15 @@
 			</legend>
 
 			<hr />
-            <div clas="row">
-                <div class="col-md-12">
+            <div clasس="row">
+                <div class="col-md-6">
         		    <div class="mb-3">
 				        <label asp-for="CustomerName" class="form-label"></label>
 				        <input asp-for="CustomerName" class="form-control" />
 				        <span asp-validation-for="CustomerName" class="text-danger"></span>
 			        </div>
+			    </div>
+                <div class="col-md-6">
 			        <div class="mb-3">
 				        <label asp-for="Description" class="form-label"></label>
 				        <textarea asp-for="Description" class="form-control"></textarea>
