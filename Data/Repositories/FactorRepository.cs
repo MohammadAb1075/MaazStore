@@ -28,6 +28,7 @@ public class FactorRepository : IFactorRepository
         result.Data =
             await
             _db.Factors
+            .OrderByDescending(x=>x.FactorNo)
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
@@ -49,7 +50,7 @@ public class FactorRepository : IFactorRepository
     public async Task UpdateAsync(Factor model)
     {
 
-        List<FactorRow> factorRows = _db.FactorRows.Where(x => x.FactorId == model.Id).ToList();
+        List<FactorRow> factorRows = _db.FactorRows.Where(x => x.FactorId.ToString() == model.Id.ToString()).ToList();
         _db.FactorRows.RemoveRange(factorRows);
         _db.Set<Factor>().Attach(model);
         _db.Attach(model);
