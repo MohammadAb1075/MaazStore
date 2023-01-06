@@ -33,12 +33,11 @@ public class FactorController : Infrastructure.BaseController
         ViewData["Title"] = "لیست فاکتور ها";
         var items = await _fr.GetWithPaginationAsync(pageNumber, pageSize);
 
-        var viewModel = new ProductListViewModel
+        var viewModel = new ListViewModel<Factor>
         {
-            Data = await _pr.GetWithPaginationAsync(pageNumber, pageSize)
+            Data = await _fr.GetWithPaginationAsync(pageNumber, pageSize)
         };
         return View(viewModel);
-
     }
 
     [HttpGet]
@@ -46,18 +45,60 @@ public class FactorController : Infrastructure.BaseController
     {
         Factor item = new Factor();
         item.FactorRows.Add(new FactorRow());
-        //item.FactorRows.Add(new Product(), new FactorRow());
-
         ViewBag.ProductList = await GetProductsAsync();
+        //var products = await GetProductsAsync();
+        //ViewBag.ProductList = products
+        //                         .Select(x => new {
+        //                             Id = x.Id,
+        //                             Name = x.Name,
+        //                             UnitPrice = x.UnitPrice
+        //                         }).ToList();
+
         return View(item);
     }
 
     [HttpPost]
     public async Task<IActionResult> Create(Factor model)
     {
-        foreach (var item in model.FactorRows.Where(x => x.Quantity == 0).ToList())
+
+    //    item.PoDetails.RemoveAll(a => a.Quantity == 0);
+    //    bool bolret = false;
+    //    string errMessage = "";
+    //    try
+    //    {
+    //        bolret = _Repo.Create(item);
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        errMessage = errMessage + " " + ex.Message;
+    //    }
+
+
+    //    if (bolret == false)
+    //    {
+    //        errMessage = errMessage + " " + _Repo.GetErrors();
+
+    //        TempData["ErrorMessage"] = errMessage;
+    //        ModelState.AddModelError("", errMessage);
+    //        return View(item);
+    //    }
+    //    else
+    //    {
+    //        TempData["SuccessMessage"] = "" + item.PoNumber + " Created Successfully";
+    //        return RedirectToAction(nameof(Index));
+    //    }
+    //}
+
+        model.FactorRows.RemoveAll(a => a.Quantity == 0);
+
+        //foreach (var item in model.FactorRows.Where(x => x.Quantity == 0).ToList())
+        //{
+        //    model.FactorRows.Remove(item);
+        //}
+        foreach (var item in model.FactorRows)
         {
-            model.FactorRows.Remove(item);
+            var P = await _pr.GetByIdAsync(item.ProductId);
+            item.Product = P;
         }
 
         //bool bolret = false;
@@ -84,6 +125,42 @@ public class FactorController : Infrastructure.BaseController
         //    return RedirectToAction(nameof(Index));
         //}
         return RedirectToAction(nameof(Index));
+        //return View(model);
+    }
+
+
+    [HttpGet]
+    public async Task<IActionResult> Edit(string id)
+    {
+        var item = await _fr.GetByIdAsync(id);
+        ViewBag.ProductList = await GetProductsAsync();
+        return View(item);
+    }
+
+
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(Factor model)
+    {
+        model.FactorRows.RemoveAll(a => a.Quantity == 0);
+
+        foreach (var item in model.FactorRows)
+        {
+            var P = await _pr.GetByIdAsync(item.ProductId);
+            item.Product = P;
+        }
+
+        //bool bolret = false;
+        var errMessage = "";
+        try
+        {
+            await _fr.UpdateAsync(model);
+        }
+        catch (Exception ex)
+        {
+            errMessage = errMessage + " " + ex.Message;
+        }
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
@@ -91,7 +168,7 @@ public class FactorController : Infrastructure.BaseController
     {
         var factor = await _fr.GetByIdAsync(id);
 
-        ViewData["ProductList"] = await GetProductsAsync();
+       // ViewData["ProductList"] = await GetProductsAsync();
         return View(factor);
     }
 
@@ -119,10 +196,10 @@ public class FactorController : Infrastructure.BaseController
         return lstProducts;
     }
 
-//    private async Task<List<Product>> GetProductsAsync()
-//    {
-//        var products = await _pr.GetAllAsync();
-//        return products;
-//    }
+    //private async Task<List<Product>> GetProductsAsync()
+    //{
+    //    var products = await _pr.GetAllAsync();
+    //    return products;
+    //}
 
 }
