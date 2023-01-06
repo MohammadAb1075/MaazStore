@@ -14,6 +14,7 @@ public class Factor
     public Factor()
     {
         Id = System.Guid.NewGuid();
+        InsertDateTime = DateTime.Now;
         UpdateDateTime = InsertDateTime;
     }
 
@@ -21,9 +22,10 @@ public class Factor
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
     public System.Guid Id { get; private set; }
 
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Required(ErrorMessage = "تکمیل فیلد {0} الزامی است!")]
     [Display(Name = "شماره فاکتور")]
-    public int FactorNo { get; set; }
+    public int FactorNo { get; private set; }
 
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
     [Display(Name = "تاریخ ثبت")]
