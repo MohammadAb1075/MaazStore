@@ -1,20 +1,8 @@
-﻿@*@model ProductListViewModel
-<h1>@(ViewData["Title"])</h1>
-
-@foreach (var item in Model.Data.Data)
-{
-    @await Html.PartialAsync("~/Views/Shared/Product/_ProductSummary.cshtml",item)
-}
-
-
-*@
-@model ProductListViewModel
+﻿@model ProductListViewModel
 <h1>@ViewData["Title"]</h1>
 <p>
-    <a asp-action="Create">ایجاد محصول جدید</a>
+    <a asp-action="Create" class="btn btn-sm btn-primary"><i class="bi bi-plus-circle"></i> ایجاد محصول جدید</a>
 </p>
-
-
 
 <table class="table">
     <thead>
@@ -33,18 +21,24 @@
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                 <td>@Html.DisplayFor(modelItem => item.UnitPrice)</td>
                 <td>
-                    <a asp-action="Edit"  asp-route-id="@(item.Id)">ویرایش 1</a>
+@*                    <a asp-action="Edit"  asp-route-id="@(item.Id)">ویرایش 1</a>
                     @Html.ActionLink("ویرایش 2", "Edit", new{ id = item.Id }) |
                     @Html.ActionLink("حذف 1", "Delete", new { id = item.Id })
-                    <a asp-action="Delete"  asp-route-id="@(item.Id)">حذف 2</a>
+                    <a asp-action="Delete"  asp-route-id="@(item.Id)">حذف 2</a>*@
+                    <a asp-action="Edit" asp-route-id="@(item.Id)" class="btn btn-sm btn-warning"><i class="bi bi-pencil-square"></i></a>
+                    <button type="button" linkAction="@(item.Id)" class="btn btn-sm btn-danger deleteItem"><i class="bi bi-trash"></i></button>
+
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-
-
 <div class="btn-group m-1" page-model="Model.Data.PageInfo" page-action="Index" page-classes-enabled="true" page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-success">
 
 </div>
+
+<partial name="PartialViews/_ConfirmModal" />
+@section Scripts {
+    <script src="~/js/factor/confirmModal.js" asp-append-version="true"></script>
+}
