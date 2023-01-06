@@ -18,8 +18,6 @@
     }
 
     $.each(totalObject, function (k, v) {
-        //console.log(k + '  ' + v)
-        console.log(tableElement.find('.form-c.' + k))
         tableElement.find('.form-c.' + k).val(v)
     })
 
