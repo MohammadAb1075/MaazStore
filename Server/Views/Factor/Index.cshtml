@@ -4,50 +4,50 @@
 <p>
     <a asp-action="Create" class="btn btn-sm btn-primary"><i class="bi bi-plus-circle"></i> ایجاد فاکتور جدید</a>
 </p>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th class="d-none">@Html.DisplayNameFor(model => model.Data.Data[0].Id)</th>
-            <th>@Html.DisplayNameFor(model => model.Data.Data[0].FactorNo)</th>
-            <th>@Html.DisplayNameFor(model => model.Data.Data[0].InsertDateTimeShamsi)</th>
-            <th>@Html.DisplayNameFor(model => model.Data.Data[0].CustomerName)</th>
-            <th>@Html.DisplayNameFor(model => model.Data.Data[0].TotalPrice)</th>
-            <th>@Html.DisplayNameFor(model => model.Data.Data[0].TotalDiscount)</th>
-            <th>@Html.DisplayNameFor(model => model.Data.Data[0].Payable)</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Data.Data)
-        {
+<div class="col-12 table-responsive ps-0 pe-0" style="font-size:14px; overflow-x:auto">
+    <table class="table">
+        <thead>
             <tr>
-                <td class="d-none">@Html.DisplayFor(modelItem => item.Id)</td>
-                <td>@Html.DisplayFor(modelItem => item.FactorNo)</td>
-                <td>@Html.DisplayFor(modelItem => item.InsertDateTimeShamsi)</td>
-                <td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
-                <td>@Html.DisplayFor(modelItem => item.TotalPrice)</td>
-                <td>@Html.DisplayFor(modelItem => item.TotalDiscount)</td>
-                <td>@Html.DisplayFor(modelItem => item.Payable)</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@(item.Id)" class="btn btn-sm btn-warning"><i class="bi bi-pencil-square"></i></a>
-                    @*@Html.ActionLink("ویرایش 2", "Edit", new{ id = item.Id }) |
-                    @Html.ActionLink("حذف 1", "Delete", new { id = item.Id })*@
-                    @*<a asp-action="Delete" asp-route-id="@(item.Id)" class="btn btn-sm btn-danger deleteItem"><i class="bi bi-trash"></i></a>*@
-                    
-                    <button type="button" linkAction="@(item.Id)" class="btn btn-sm btn-danger deleteItem"><i class="bi bi-trash"></i></button>
-                    <a asp-action="Details" asp-route-id="@(item.Id)" class="btn btn-sm btn-secondary"><i class="bi bi-list"></i></a>
-
-                    @*
-                    <span id="confirmDeleteSpan_@(item.Id)" class="d-none">
-                        <span></span>
-                    </span>*@
-                </td>
+                <th class="d-none">@Html.DisplayNameFor(model => model.Data.Data[0].Id)</th>
+                <th>@Html.DisplayNameFor(model => model.Data.Data[0].FactorNo)</th>
+                <th>@Html.DisplayNameFor(model => model.Data.Data[0].InsertDateTimeShamsi)</th>
+                <th>@Html.DisplayNameFor(model => model.Data.Data[0].CustomerName)</th>
+                <th>@Html.DisplayNameFor(model => model.Data.Data[0].TotalPrice)</th>
+                <th>@Html.DisplayNameFor(model => model.Data.Data[0].TotalDiscount)</th>
+                <th>@Html.DisplayNameFor(model => model.Data.Data[0].Payable)</th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Data.Data)
+            {
+                <tr>
+                    <td class="d-none">@Html.DisplayFor(modelItem => item.Id)</td>
+                    <td>@Html.DisplayFor(modelItem => item.FactorNo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.InsertDateTimeShamsi)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TotalPrice)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TotalDiscount)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Payable)</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@(item.Id)" class="btn btn-sm btn-warning"><i class="bi bi-pencil-square"></i></a>
+                        @*@Html.ActionLink("ویرایش 2", "Edit", new{ id = item.Id }) |
+                        @Html.ActionLink("حذف 1", "Delete", new { id = item.Id })*@
+                        @*<a asp-action="Delete" asp-route-id="@(item.Id)" class="btn btn-sm btn-danger deleteItem"><i class="bi bi-trash"></i></a>*@
+                    
+                        <button type="button" linkAction="@(item.Id)" class="btn btn-sm btn-danger deleteItem"><i class="bi bi-trash"></i></button>
+                        <a asp-action="Details" asp-route-id="@(item.Id)" class="btn btn-sm btn-secondary"><i class="bi bi-list"></i></a>
 
+                        @*
+                        <span id="confirmDeleteSpan_@(item.Id)" class="d-none">
+                            <span></span>
+                        </span>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 <div class="btn-group m-1" page-model="Model.Data.PageInfo" page-action="Index" page-classes-enabled="true" page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-success">
 
 </div>
