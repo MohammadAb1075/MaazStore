@@ -1,238 +1,113 @@
-﻿@model Domain.Factors.Factor
+﻿@using Domain.Products
+@model Domain.Factors.Factor
 
 @{
-    ViewData["Title"] = "Details";
-    var ProductList = ViewData["ProductList"] as List<SelectListItem>;
+    ViewData["Title"] = "جزئیات";
 }
-	
- <div class="card">
-    	<div class="card-header bg-dark text-uppercase text-white text-center mb-2 pt-0" style="height:25px;">
-		<h6>Purchase Order - Details</h6>
-        </div>	
 
-  <form id="CodeSbyAnizForm">
+@section StyleSheets {
+    <link rel="stylesheet" href="~/css/factor/factor.css" asp-append-version="true" />
+    @*<link rel="stylesheet" href="~/css/factor/table.css" asp-append-version="true" />*@
+}
 
-      <div class="col-12 btn-group">
-        
-    <div class="row col-11 ml-2">    
-           <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="row">
+	<div class="col-12 p-3 col-md-12 p-md-5 bg-light border border-2 rounded-3 shadow-lg">
+        <fieldset>
+			<legend>
+				جزئیات فاکتور
+			</legend>
+        </fieldset>
+        <div class="col-12 table-responsive border ps-0 pe-0 text-center" style="font-size:14px; overflow-x:auto">
+                <table id="factorRowTable" class="table table-bordered table-sm table-hover mb-0">
+                    <thead class="table-primary">
+                        <tr class="table-info">
+                            <th class="text-start pt-0 pb-0 align-middle" colspan="8" rowspan="2">
+                                @Html.DisplayNameFor(model => model.CustomerName): &nbsp;
+                                @Html.DisplayFor(modelItem => @Model.CustomerName)
+                            </th>
+                            <th class="pt-0 pb-0">
+                                @Html.DisplayNameFor(model => model.InsertDateTimeShamsi)
+                            </th>
+                            <th class="pt-0 pb-0">
+                                 @Html.DisplayFor(modelItem => @Model.InsertDateTimeShamsi)
+                            </th>
+                        </tr>
+                        <tr class="table-info">
+                            <th class="pt-0 pb-0">
+                                @Html.DisplayNameFor(model => model.FactorNo)
+                            </th>
+                            <th class="pt-0 pb-0">
+                                @Html.DisplayFor(modelItem => @Model.FactorNo)
+                            </th>
+                        </tr>
 
-            <div class="form-group col-2 ">
-                <label asp-for="FactorNo" class="control-label"></label>                
-            </div>
-            <div class="form-group col-3">                
-                <input asp-for="FactorNo" class="form-control form-control-plaintext" readonly/>                
-            </div>
-            
-            <div class="form-group col-2">            
-            </div>
-
-   
-@*            <div class="form-group col-2">
-                <label asp-for="FactorRows" class="control-label"></label>                
-            </div>
-            <div class="form-group col-3">                
-                <select id="FactorRows" asp-for="Product" class="form-control form-control-plaintext" readonly asp-items="@(ViewData["ProductList"] as List<SelectListItem>)" onchange="getExRate(this);"></select>                
-            </div>*@
-
-            <div class="form-group col-2">            
-            </div>
-
-            <div class="form-group col-2">
-                <label asp-for="InsertDateTime" class="control-label"></label>                
-            </div>
-            <div class="form-group col-3">                
-                <input asp-for="InsertDateTime" class="form-control form-control-plaintext" readonly />                
-            </div>    
-              
-            <div class="form-group col-2">
-                <label asp-for="CustomerName" class="control-label"></label>                
-            </div>
-            <div class="form-group col-3">                
-                <input asp-for="CustomerName" class="form-control form-control-plaintext" readonly />                
-            </div>    
-              
-            	<div  class="col-12 CodesDiv">
-					<table id="CodesTable" class="table table-borderless table-sm mb-0 pb-0 border CodesTable">
-						<thead>
-							<tr>
-                                <th>
-                                    #
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.FactorRows[0].ProductId)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.FactorRows[0].Quantity)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.FactorRows[0].Product.UnitPrice)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.FactorRows[0].Discount)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.FactorRows[0].DiscountedUnitPrice)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.FactorRows[0].RowPriceTotal)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.FactorRows[0].DiscountedRowPriceTotal)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.FactorRows[0].CustomerProfitUnitDiscount)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.FactorRows[0].CustomerProfitTotalDiscount)
-                                </th>								
-                                  <th style="width:60px;">                                        
-                                   </th>
-							</tr>
-						</thead>
-
-                    <tbody id="CsDiv">                                
-                        @for (int i = 0; i < Model.FactorRows?.Count; i++)
-                        {
-                            	  <tr>
-									<td>
-								        @(i + 1)                                                                              
-									</td>	
-
-									<td>
-								        <input asp-for="@Model.FactorRows[i].Product.Name" class="form-control form-control-plaintext" readonly />                                                                              
-									</td>
-                                    
-                                    <td>
-										<input asp-for="@Model.FactorRows[i].Quantity" class="form-control form-control-plaintext QtyTotal" readonly />										
-										<span asp-validation-for="@Model.FactorRows[i].Quantity" class="text-danger"></span>
-									</td>
-
-                                    <td>
-										<input asp-for="@Model.FactorRows[i].Product.UnitPrice" class="form-control form-control-plaintext UnitPrice" readonly />
-										<span asp-validation-for="@Model.FactorRows[i].Product.UnitPrice" class="text-danger"></span>
-									</td>
-                                    
-                                    <td>
-										<input asp-for="@Model.FactorRows[i].Discount" class="form-control form-control-plaintext Discount" readonly />
-										<span asp-validation-for="@Model.FactorRows[i].Discount" class="text-danger"></span>
-									</td>     
-                                    
-                                    <td>
-										<input asp-for="@Model.FactorRows[i].DiscountedUnitPrice" class="form-control form-control-plaintext DiscountedUnitPrice" readonly />
-									</td>
-                                                                 
-                                    <td>
-										<input asp-for="@Model.FactorRows[i].RowPriceTotal" class="form-control form-control-plaintext AmountTotal" readonly />										                                        
-									</td>
-                                                                 
-                                    <td>
-										<input asp-for="@Model.FactorRows[i].DiscountedRowPriceTotal" class="form-control form-control-plaintext DiscountedRowPriceTotal" readonly />										                                        
-									</td>
-                                                                 
-                                    <td>
-										<input asp-for="@Model.FactorRows[i].CustomerProfitUnitDiscount" class="form-control form-control-plaintext CustomerProfitUnitDiscount" readonly />										                                        
-									</td>
-                                                                                  
-                                    <td>
-										<input asp-for="@Model.FactorRows[i].CustomerProfitTotalDiscount" class="form-control form-control-plaintext CustomerProfitUnitDiscount" readonly />										                                        
-									</td>
-                                                                 
-                                     <td style="width:60px;">                                          
-                                        </td>
-                                    </tr>                                
-                        }
+                        <tr>
+                            <th scope="col">#</th>  
+                            <th scope="col">@Html.DisplayNameFor(model => model.FactorRows[0].Product.Name)</th>  
+                            <th scope="col">@Html.DisplayNameFor(model => model.FactorRows[0].Quantity)</th>  
+                            <th scope="col">@Html.DisplayNameFor(model => model.FactorRows[0].Product.UnitPrice)</th>  
+                            <th scope="col">@Html.DisplayNameFor(model => model.FactorRows[0].Discount)</th>  
+                            <th scope="col">@Html.DisplayNameFor(model => model.FactorRows[0].DiscountedUnitPrice)</th>  
+                            <th scope="col">@Html.DisplayNameFor(model => model.FactorRows[0].RowPriceTotal)</th>  
+                            <th scope="col">@Html.DisplayNameFor(model => model.FactorRows[0].DiscountedRowPriceTotal)</th>  
+                            <th scope="col">@Html.DisplayNameFor(model => model.FactorRows[0].CustomerProfitUnitDiscount)</th>  
+                            <th scope="col">@Html.DisplayNameFor(model => model.FactorRows[0].CustomerProfitTotalDiscount)</th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(int i = 0; i < Model.FactorRows.Count; i++){
+                            var rowNumber = i + 1;
+                        <tr>
+                            <td>@(rowNumber)</td>
+                            <td>@Html.DisplayFor(modelItem => @Model.FactorRows[i].Product.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => @Model.FactorRows[i].Quantity)</td>
+                            <td>@Html.DisplayFor(modelItem => @Model.FactorRows[i].Product.UnitPrice)</td>
+                            <td>@Html.DisplayFor(modelItem => @Model.FactorRows[i].Discount)</td>
+                            <td>@Html.DisplayFor(modelItem => @Model.FactorRows[i].DiscountedUnitPrice)</td>
+                            <td>@Html.DisplayFor(modelItem => @Model.FactorRows[i].RowPriceTotal)</td>
+                            <td>@Html.DisplayFor(modelItem => @Model.FactorRows[i].DiscountedRowPriceTotal)</td>
+                            <td>@Html.DisplayFor(modelItem => @Model.FactorRows[i].CustomerProfitUnitDiscount)</td>
+                            <td>@Html.DisplayFor(modelItem => @Model.FactorRows[i].CustomerProfitTotalDiscount)</td>
+                        </tr>
+                        }  
                     </tbody>
 
-					</table>                      
-                    
+                    <tfoot class="table-primary table-borderless">
+				        <tr class="table-success">
+                            <th class="text-start pt-0 pb-0" colspan="8" rowspan="3">
+                                @Html.DisplayNameFor(model => model.Description): &nbsp;
+                                @Html.DisplayFor(modelItem => @Model.Description)
+                            </th>
+                            <th class="pt-0 pb-0">
+                                @Html.DisplayNameFor(model => model.TotalPrice)
+                            </th>
+                            <th class="pt-0 pb-0">
+                                 @Html.DisplayFor(modelItem => @Model.TotalPrice)
+                            </th>
+                        </tr>
+                        <tr class="table-success">
+                            <th class="pt-0 pb-0">
+                                @Html.DisplayNameFor(model => model.TotalDiscount)
+                            </th>
+                            <th class="pt-0 pb-0">
+                                @Html.DisplayFor(modelItem => @Model.TotalDiscount)
+                            </th>
+                        </tr>
+                        <tr class="table-success">
+                            <th class="pt-0 pb-0">
+                                @Html.DisplayNameFor(model => model.Payable)
+                            </th>
+                            <th class="pt-0 pb-0">
+                                @Html.DisplayFor(modelItem => @Model.Payable)
+                            </th>
+                        </tr>
+			        </tfoot>
 
-                  <table class="table table-sm mb-0 pb-0 border">
-						<thead>
-							<tr>
-								<th style="width:9.09%;">
-									Total
-								</th>	
-                                
-                                <th style="width:9.09%;">									
-								</th>
-                                
-								<th style="width:9.09%;">									
-                                    <input type="text" id="txtQtyTotal" class="form-control form-control-plaintext" value="" />
-								</th>
-
-                                <th style="width:9.09%;">								    
-								</th>
-
-                                <th style="width:9.09%;">								    
-								</th>                  
-                                
-                                <th style="width:9.09%;">									
-								</th>					
-
-                                <th style="width:9.09%;">									
-                                    <input type="text" id="txtAmountTotal" class="form-control form-control-plaintext" value="" />
-								</th>					
-                                
-                                 <th style="width:9%;">                                      
-                                </th>
-							</tr>
-						</thead>
-                        </table>
-
-				</div>
-
-
-            <div class="form-group col-12">            
+                </table>
             </div>
-
-            <div class="form-group col-12">            
-            </div>
-     </div>
-
-    <div class="form-group btn-group col-1">
-         <div  class="form-group invisible">        
-                <select id="mySelect" class="form-control"  size="5" 
-                style="visibility: hidden;" asp-items="@ProductList" >       
-                </select>        
-        </div>
-@*        <div ID="HiddenDiv" style="visibility: hidden;">
-            <input asp-for="PoDate" class="form-control" />
-             <select asp-for="BaseCurrencyId" class ="form-control" asp-items="ViewBag.BaseCurrencyList"></select>        
-        <input id="txtValue"  class="form-control col-2 invisible" />     
-        <select id="dropdownExRate" class="form-control"  size="1" style="visibility: hidden;"  asp-items="ViewBag.ExchangeRate" >       
-        </select>
-            <select id="dropdownUnitNames" class="form-control"  size="1" style="visibility: hidden;"  asp-items="ViewBag.UnitNames" >       
-            </select>        
-        </div> *@
-    </div> 
-    
-    </div>   
-       
-         
-           <div class="form-group btn-group col-12">
-                <div class="col-1"></div>
-                <div class="col-5">
-                    <a class="btn btn-dark btn-block" asp-action="Edit" asp-route-id="@Model.Id"
-                       asp-route-pg="@TempData.Peek("CurrentPage")">Edit</a>
-                </div>           
-                <div class="col-5">
-                    <a class="btn btn-secondary btn-block" asp-action="index"
-                       asp-route-pg="@TempData.Peek("CurrentPage")">Back</a>
-                </div>     
-                <div class="col-1"></div>
-            </div>
-
-    
-        
-</form>
-
+    </div>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("PartialViews/_ValidationScriptsPartial");} 
-
-<script>
- CalcTotals();
-</script>
 }

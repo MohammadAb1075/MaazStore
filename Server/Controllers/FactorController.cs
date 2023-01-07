@@ -129,8 +129,6 @@ public class FactorController : Infrastructure.BaseController
     public async Task<IActionResult> Details(string id)
     {
         var factor = await _fr.GetByIdAsync(id);
-
-       // ViewData["ProductList"] = await GetProductsAsync();
         return View(factor);
     }
 

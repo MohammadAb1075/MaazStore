@@ -36,13 +36,12 @@
                     @*<a asp-action="Delete" asp-route-id="@(item.Id)" class="btn btn-sm btn-danger deleteItem"><i class="bi bi-trash"></i></a>*@
                     
                     <button type="button" linkAction="@(item.Id)" class="btn btn-sm btn-danger deleteItem"><i class="bi bi-trash"></i></button>
+                    <a asp-action="Details" asp-route-id="@(item.Id)" class="btn btn-sm btn-secondary"><i class="bi bi-list"></i></a>
 
                     @*
                     <span id="confirmDeleteSpan_@(item.Id)" class="d-none">
                         <span></span>
                     </span>*@
-
-           
                 </td>
             </tr>
         }
