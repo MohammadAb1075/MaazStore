@@ -18,14 +18,27 @@ $(function () {
         rowOuterHtml = rowOuterHtml.replaceAll('-' + lastrowIdx, '-' + nextrowIdx);
 
         var trElement = $(rowOuterHtml);
+
+        for (i = 0; i < trElement.find('select').length; i++) {
+            trElement.find('select:eq(' + i + ')').html('').append(lastRow.find('select:eq(' + i + ')').html());
+        }
         trElement.find('.form-c').val('0');
         //console.log(rowOuterHtml)
         if (lastRow.length == 0) {
             table.find('tbody').append(rowOuterHtml);
         }
         lastRow.after(rowOuterHtml);
-        table.find('tbody tr').last().attr('rowIndex', nextrowIdx).find('.form-c').val('0');
-        table.find('tbody tr').last().find('select.form-c').val('$0');
+
+        lastRow = table.find('tbody tr').last();
+        lastRow.show()
+
+        $.each(lastRow.find('select'), function () {
+            $(this).val($(this).find('option:first').val()).change();
+        })
+        lastRow.attr('rowIndex', nextrowIdx).find('.form-c').val('0');
+        console.log(lastRow.find('.IsDeleted'))
+        lastRow.find('.IsDeleted').val('false');
+        lastRow.find('select.form-c').val('$0');
         rebindvalidators();
     }
 
@@ -43,8 +56,8 @@ $(function () {
     }
 
     function DeleteItem(btn) {
-        if (table.find('tbody tr').length > 1) {
-            $(this).parents('table').find('.IsDeleted').val('1')
+        if (table.find('tbody tr:visible').length > 1) {
+            btn.parents('tr').find('.IsDeleted').val('true')
             btn.parents('tr').hide()
         }
         calcTotal(table);
