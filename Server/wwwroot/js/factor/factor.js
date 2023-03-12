@@ -4,7 +4,6 @@
         var value = $(this).val()
         $(this).siblings('input.ProductId').val(value.split('$')[0])
         $(this).siblings('input.Name').val($(this).find('option[value="' + value + '"]').text())
-        console.log($(this).find('option[value="' + value + '"]').text())
         trElement.find('td.UnitPrice input').val(value.split('$')[1])
         if (value.split('$')[0] != '') {
             trElement.find('td input.Quantity').val('1')
